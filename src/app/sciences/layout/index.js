@@ -52,7 +52,7 @@ export default class ExLayout extends Component {
                     <Sidebar mode={this.state.mode}/>
                 </Sider>}
                 <Layout>
-                    <Content style={{margin: '0 16px'}}>
+                    <Content style={{margin: '0 16px', position: 'relative'}}>
                         <Route exact path="/" render={() => (
                             select('isLogin') ? <Redirect to="/dashboard"/> : <Redirect to="/login"/>
                         )}/>
