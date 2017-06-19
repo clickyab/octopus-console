@@ -3,8 +3,9 @@ import {createLogger} from "redux-logger";
 import loginReducer from "../reducers/loginReducer";
 import {loadState, saveState} from './localStorage';
 
-
 const logger = createLogger();
+const persistedState = loadState();
+let enhancer;
 
 const rootReducer = (state, action) => {
     return combineReducers({
@@ -13,14 +14,21 @@ const rootReducer = (state, action) => {
     })(state, action);
 };
 
-let enhancer = compose(
-    applyMiddleware(
-        logger
-    ),
-);
+
+if (process.env.NODE_ENV !== 'production') {
+    enhancer = compose(
+        applyMiddleware(
+            logger
+        ),
+    );
+
+} else {
+    enhancer = compose(
+        applyMiddleware(),
+    );
+}
 
 
-const persistedState = loadState();
 let store = createStore(
     rootReducer,
     persistedState,
