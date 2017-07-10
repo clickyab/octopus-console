@@ -1,7 +1,8 @@
 import {applyMiddleware, combineReducers, compose, createStore} from "redux";
 import {createLogger} from "redux-logger";
-import loginReducer from "../reducers/loginReducer";
+import {loginReducer} from "../reducers/loginReducer";
 import {loadState, saveState} from './localStorage';
+import {userDataReducer} from "../reducers/userDataReducer";
 
 const logger = createLogger();
 const persistedState = loadState();
@@ -10,7 +11,8 @@ let enhancer;
 const rootReducer = (state, action) => {
     return combineReducers({
         //Store object is here
-        isLogin: loginReducer
+        isLogin: loginReducer,
+        userData: userDataReducer
     })(state, action);
 };
 

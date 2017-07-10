@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Form, Input, Icon, Row, Col, Checkbox, message, Spin} from 'antd';
 import {dispatch} from '../../services/dispatch';
-import {successfulLogin} from "../../redux/actions/index";
+import {failedLogin, successfulLogin, userResponseSuccess} from "../../redux/actions/index";
 import {withRouter} from 'react-router-dom';
+import * as swagger from './../../swagger/index';
 import './styles/index.less';
 
 const FormItem = Form.Item;
@@ -16,37 +17,62 @@ class Login extends Component {
         };
     }
 
-    login = () => {
-        setTimeout(() => {
-            dispatch(successfulLogin());
-            this.props.history.push('/dashboard')
-        },3000)
-    };
-
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
-            if(!err) {
-                this.setState({loading: true});
-                message.success('You are successfully logged in.');
-                this.login();
-                console.log(values);
+            if (!err) {
+                this.submitLogin(values);
             }
         })
     };
 
+    login = (formData) => {
+        return new Promise((resolve, reject) => {
+            (new swagger.RoutesApi()
+                .userLoginPost({'payloadData': formData}, (error, body, response) => {
+                    if (response.statusCode === 200) return resolve(response.body);
+                    if (response.statusCode === 403) return reject(response.body);
+                })
+            )
+        })
+    };
+
+    submitLogin = async (formData) => {
+        this.setState({loading: true});
+        try {
+            const data = await this.login(formData);
+            dispatch(successfulLogin());
+            dispatch(userResponseSuccess(data));
+
+            message.success('You are successfully logged in.');
+            this.props.history.push('/dashboard');
+        } catch (error) {
+            dispatch(failedLogin());
+            message.error(error.error.text);
+            this.setState({loading: false});
+        }
+    };
+
+    componentWillUnmount() {
+        this.setState({loading: false})
+    }
+
     render() {
         const {getFieldDecorator} = this.props.form;
         return (
-            <Row type="flex" align={'center'}  justify={'center'} className={'form-layout'}>
+            <Row type="flex" align={'center'} justify={'center'} className={'form-layout'}>
                 <Col xl={6} sm={12} xs={20} className={'login-form'}>
                     <h3 className={'text-center'}>Exchange login account</h3>
                     <Form onSubmit={this.handleSubmit}>
                         <FormItem>
-                            {getFieldDecorator('username', {
-                                rules: [{required: true, message: 'Please input your username!'}]
+                            {getFieldDecorator('email', {
+                                rules: [{
+                                    type: 'email', message: 'The input is not valid E-mail!'
+                                }, {
+                                    required: true, message: 'Please input your username!'
+                                }]
                             })(
-                                <Input prefix={<Icon type="user"/>} placeholder="Username"/>
+                                <Input prefix={<Icon type="user"/>} placeholder="Email"/>
                             )}
                         </FormItem>
                         <FormItem>
