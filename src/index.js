@@ -6,6 +6,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/css/bootstrap-theme.css';
 import store from "./app/redux/store/store";
 import App from "./app/sciences/index";
+import { LocaleProvider } from 'antd';
+import enUS from 'antd/lib/locale-provider/en_US';
 
-ReactDOM.render(<Provider store={store}><App/></Provider>, document.getElementById('root'));
+ReactDOM.render(<Provider store={store}><LocaleProvider locale={enUS}><App/></LocaleProvider></Provider>, document.getElementById('root'));
 registerServiceWorker();
