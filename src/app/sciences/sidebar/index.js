@@ -17,6 +17,9 @@ class Sidebar extends Component {
             case 'demand':
                 this.props.history.push('/demand');
                 break;
+            case 'exchange':
+                this.props.history.push('/exchange');
+                break;
             case 'logout':
                 this.logOut();
                 break;
@@ -52,6 +55,12 @@ class Sidebar extends Component {
                         <span>
                             <Icon type="woman"/>
                             <span className="nav-text">Demand</span>
+                        </span>
+                    </Menu.Item>
+                    <Menu.Item key="exchange">
+                        <span>
+                            <Icon type="sync"/>
+                            <span className="nav-text">Exchange</span>
                         </span>
                     </Menu.Item>
                     <Menu.Item key="logout">
