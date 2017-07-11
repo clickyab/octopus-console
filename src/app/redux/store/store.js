@@ -6,6 +6,7 @@ import {userDataReducer} from "../reducers/userDataReducer";
 import {demandDataReducer} from "../reducers/demandDataReducer";
 import {supplierDataReducer} from "../reducers/supplierDataReducer";
 import {exchangeDataReducer} from "../reducers/exchangeDataReducer";
+import {sidebarStateReducer} from "../reducers/sidebarStateReducer";
 
 const logger = createLogger();
 const persistedState = loadState();
@@ -18,7 +19,8 @@ const rootReducer = (state, action) => {
         userData: userDataReducer,
         demandData: demandDataReducer,
         supplierData: supplierDataReducer,
-        exchangeData: exchangeDataReducer
+        exchangeData: exchangeDataReducer,
+        sidebarState: sidebarStateReducer
     })(state, action);
 };
 

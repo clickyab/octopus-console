@@ -23,3 +23,7 @@ export const getSupplierData = (data) => ({type: GET_SUPPLIER_DATA, data});
 //EXCHANGE DATA
 export const GET_EXCHANGE_DATA = 'GET_EXCHANGE_DATA';
 export const getExchangeData = (data) => ({type: GET_EXCHANGE_DATA, data});
+
+//SIDEBAR MENU STATE
+export const SIDEBAR_STATE = 'SIDEBAR_STATE';
+export const getSidebarState = (data) => ({type: SIDEBAR_STATE, data});
