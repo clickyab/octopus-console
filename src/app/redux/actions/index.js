@@ -19,3 +19,7 @@ export const getDemandData = (data) => ({type: GET_DEMAND_DATA, data});
 //SUPPLIER DATA
 export const GET_SUPPLIER_DATA = 'GET_DEMAND_DATA';
 export const getSupplierData = (data) => ({type: GET_SUPPLIER_DATA, data});
+
+//EXCHANGE DATA
+export const GET_EXCHANGE_DATA = 'GET_EXCHANGE_DATA';
+export const getExchangeData = (data) => ({type: GET_EXCHANGE_DATA, data});

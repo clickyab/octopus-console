@@ -5,6 +5,7 @@ import {loadState, saveState} from './localStorage';
 import {userDataReducer} from "../reducers/userDataReducer";
 import {demandDataReducer} from "../reducers/demandDataReducer";
 import {supplierDataReducer} from "../reducers/supplierDataReducer";
+import {exchangeDataReducer} from "../reducers/exchangeDataReducer";
 
 const logger = createLogger();
 const persistedState = loadState();
@@ -16,7 +17,8 @@ const rootReducer = (state, action) => {
         isLogin: loginReducer,
         userData: userDataReducer,
         demandData: demandDataReducer,
-        supplierData: supplierDataReducer
+        supplierData: supplierDataReducer,
+        exchangeData: exchangeDataReducer
     })(state, action);
 };
 
