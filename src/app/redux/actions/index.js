@@ -15,3 +15,7 @@ export const userUnauthorized = () => ({type: UNAUTHORIZED_USER});
 //DEMAND DATA
 export const GET_DEMAND_DATA = 'GET_DEMAND_DATA';
 export const getDemandData = (data) => ({type: GET_DEMAND_DATA, data});
+
+//SUPPLIER DATA
+export const GET_SUPPLIER_DATA = 'GET_DEMAND_DATA';
+export const getSupplierData = (data) => ({type: GET_SUPPLIER_DATA, data});
