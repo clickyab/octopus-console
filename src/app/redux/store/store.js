@@ -3,6 +3,7 @@ import {createLogger} from "redux-logger";
 import {loginReducer} from "../reducers/loginReducer";
 import {loadState, saveState} from './localStorage';
 import {userDataReducer} from "../reducers/userDataReducer";
+import {demandDataReducer} from "../reducers/demandDataReducer";
 
 const logger = createLogger();
 const persistedState = loadState();
@@ -12,7 +13,8 @@ const rootReducer = (state, action) => {
     return combineReducers({
         //Store object is here
         isLogin: loginReducer,
-        userData: userDataReducer
+        userData: userDataReducer,
+        demandData: demandDataReducer
     })(state, action);
 };
 

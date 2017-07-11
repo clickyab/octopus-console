@@ -1,4 +1,4 @@
-export const columns = [{
+export const demandColumns = [{
     title: 'Id',
     dataIndex: 'id',
     key: 'id'

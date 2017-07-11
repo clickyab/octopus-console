@@ -11,3 +11,7 @@ export const userResponseSuccess = (data) => ({type: USER_RESPONSE_SUCCESS, data
 //Unauthorized
 export const UNAUTHORIZED_USER = 'UNAUTHORIZED_USER';
 export const userUnauthorized = () => ({type: UNAUTHORIZED_USER});
+
+//DEMAND DATA
+export const GET_DEMAND_DATA = 'GET_DEMAND_DATA';
+export const getDemandData = (data) => ({type: GET_DEMAND_DATA, data});
