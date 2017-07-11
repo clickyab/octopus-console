@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
-import {Redirect, Route} from "react-router-dom";
-import {select} from "../../services/select";
+import {Link, Redirect, Route} from "react-router-dom";
 import Login from "../login/index";
 import {connect} from "react-redux";
 import {ProtectedRoute} from "../../services/ProtectedRouteComponent";
 import Sidebar from '../sidebar/index';
 import Dashboard from "../dashboard/index";
-import {Layout} from 'antd';
-
+import {Layout, Breadcrumb, Icon} from 'antd';
+import Supplier from "../supplier/index";
+import Demand from "../demand/index";
+import Exchange from "../exchange/index";
 
 const {Content, Footer, Sider} = Layout;
 
@@ -19,6 +20,7 @@ export default class ExLayout extends Component {
         isLogin: false,
         minHeight: window.innerHeight
     };
+
     onCollapse = (collapsed) => {
         console.log(collapsed);
         this.setState({
@@ -53,14 +55,24 @@ export default class ExLayout extends Component {
                 </Sider>}
                 <Layout>
                     <Content style={{margin: '0 16px', position: 'relative'}}>
+                        {this.state.isLogin && <Breadcrumb style={{margin: '12px 0'}}>
+                            <Breadcrumb.Item><Link to="/dashboard"><Icon type="home"/></Link></Breadcrumb.Item>
+                            <Breadcrumb.Item>
+                                {this.props.location.pathname !== '/dashboard' ? this.props.location.pathname.replace("/", "") : ''}
+                            </Breadcrumb.Item>
+                        </Breadcrumb>}
                         <Route exact path="/" render={() => (
-                            select('isLogin') ? <Redirect to="/dashboard"/> : <Redirect to="/login"/>
+                            this.state.isLogin ? <Redirect to="/dashboard"/> : <Redirect to="/login"/>
                         )}/>
 
                         <Route exact path="/login" render={() => (
-                            select('isLogin') ? <Redirect to="/dashboard"/> : <Login />
+                            this.state.isLogin ? <Redirect to="/dashboard"/> : <Login />
                         )}/>
+
                         <ProtectedRoute path="/dashboard" component={Dashboard}/>
+                        <ProtectedRoute path="/supplier" component={Supplier}/>
+                        <ProtectedRoute path="/demand" component={Demand}/>
+                        <ProtectedRoute path="/exchange" component={Exchange}/>
                     </Content>
                     <Footer style={{textAlign: 'center'}}>
                         Clickyab Exchange ©2016 Created by Ant UED
