@@ -1,0 +1,3 @@
+swagger/**/*.js
+swagger/*.js
+swagger/
