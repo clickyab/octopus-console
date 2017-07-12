@@ -1,8 +1,14 @@
+//USER SUCCESSFUL LOGIN
 export const LOGIN_SUCCESSFUL = 'LOGIN_SUCCESSFUL';
-export const LOGIN_FAILED = 'LOGIN_FAILED';
 export const successfulLogin = () => ({type: LOGIN_SUCCESSFUL});
-export const failedLogin = () => ({type: LOGIN_FAILED});
 
+//USER SUCCESSFUL LOGOUT
+export const LOGOUT_SUCCESSFUL = 'LOGOUT_SUCCESSFUL';
+export const successfulLogout = (data) => ({type: LOGOUT_SUCCESSFUL, data});
+
+//USE FOR 'isLogin' OBJECT (UI STATE)
+export const LOGIN_FAILED = 'LOGIN_FAILED';
+export const failedLogin = () => ({type: LOGIN_FAILED});
 
 //USER DATA
 export const USER_RESPONSE_SUCCESS = 'USER_RESPONSE_SUCCESS';
