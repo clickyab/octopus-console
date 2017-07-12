@@ -30,12 +30,12 @@ class Login extends Component {
     login = (formData) => {
         return new Promise((resolve, reject) => {
             (new swagger.RoutesApi()
-                .userLoginPost({'payloadData': formData}, (error, body, response) => {
-                    console.log(response);
-                    if (!response) return reject({statusCode: 500});
-                    if (response.statusCode === 200) return resolve(response.body);
-                    else return reject(response.body);
-                })
+                    .userLoginPost({'payloadData': formData}, (error, body, response) => {
+                        if (!response) return reject({statusCode: 500});
+                        if (response.statusCode === 200) return resolve(response.body);
+                        if (response.statusCode === 502) return reject({statusCode: 502});
+                        else return reject(response.body);
+                    })
             )
         })
     };
@@ -53,6 +53,9 @@ class Login extends Component {
             dispatch(failedLogin());
             if (error.statusCode === 500) {
                 http500Error();
+            }
+            if (error.statusCode === 502) {
+                message.error('Please check your network or proxy!');
             } else {
                 message.error(error.error.text);
             }
