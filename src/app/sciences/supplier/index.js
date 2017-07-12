@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {dispatch} from "./../../services/dispatch";
 import {getSupplierData, userUnauthorized} from "../../redux/actions/index";
 import {supplierColumns} from './supplierDataColumns';
+import {http500Error} from "../../services/http500ErrorNotif";
 
 const {RangePicker} = DatePicker;
 
@@ -27,6 +28,7 @@ export default class Supplier extends Component {
         return new Promise((resolve, reject) => {
             new swagger.RoutesApi()
                 .reportSupplierFromToGet(from, to, token, {}, (error, body, response) => {
+                    if (!response) return reject({statusCode: 500});
                     if (response.statusCode === 200) return resolve(response.body)
                     else return reject(response)
 
@@ -46,6 +48,9 @@ export default class Supplier extends Component {
             if (error.statusCode === 401) {
                 message.error('Your session is expired, Please login again');
                 dispatch(userUnauthorized());
+            }
+            if (error.statusCode === 500) {
+                http500Error();
             } else {
                 message.error(error.body.error.text);
             }
