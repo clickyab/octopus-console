@@ -5,6 +5,7 @@ import {failedLogin, successfulLogin, userResponseSuccess} from "../../redux/act
 import {withRouter} from 'react-router-dom';
 import * as swagger from './../../swagger/index';
 import './styles/index.less';
+import {http500Error} from "../../services/http500ErrorNotif";
 
 const FormItem = Form.Item;
 
@@ -30,8 +31,10 @@ class Login extends Component {
         return new Promise((resolve, reject) => {
             (new swagger.RoutesApi()
                 .userLoginPost({'payloadData': formData}, (error, body, response) => {
+                    console.log(response);
+                    if (!response) return reject({statusCode: 500});
                     if (response.statusCode === 200) return resolve(response.body);
-                    if (response.statusCode === 403) return reject(response.body);
+                    else return reject(response.body);
                 })
             )
         })
@@ -48,7 +51,11 @@ class Login extends Component {
             this.props.history.push('/dashboard');
         } catch (error) {
             dispatch(failedLogin());
-            message.error(error.error.text);
+            if (error.statusCode === 500) {
+                http500Error();
+            } else {
+                message.error(error.error.text);
+            }
             this.setState({loading: false});
         }
     };
