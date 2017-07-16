@@ -43,7 +43,10 @@ cat > ${TEMPORARY}/default.conf <<EOF
 server {
     listen       80;
     server_name  _;
-
+    
+    location /healthz {
+        return 200 "<b>Fine</b>";
+    }
     location / {
         root   /usr/share/nginx/build;
         index  index.html index.htm;
