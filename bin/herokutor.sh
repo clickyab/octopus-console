@@ -39,6 +39,24 @@ popd
 
 TEMPORARY=$(mktemp -d)
 
+cat > ${TEMPORARY}/default.conf <<EOF
+server {
+    listen       80;
+    server_name  _;
+
+    location / {
+        root   /usr/share/nginx/build;
+        index  index.html index.htm;
+        try_files \$uri \$uri/ /index.html;
+    }
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+}
+EOF
+
+
 # Create Rockerfile to build with rocker (the Dockerfile enhancer tool)
 cat > ${TEMPORARY}/Rockerfile <<EOF
 FROM node
@@ -51,7 +69,7 @@ EXPORT /app/build
 FROM nginx:alpine
 RUN rm -rf /usr/share/nginx
 IMPORT build /usr/share/nginx
-RUN mv /usr/share/nginx/build /usr/share/nginx/html
+ADD default.conf /etc/nginx/conf.d/default.conf
 
 TAG registry.clickyab.ae/clickyab/{{ .App }}:{{ .Version }}
 PUSH registry.clickyab.ae/clickyab/{{ .App }}:{{ .Version }}
