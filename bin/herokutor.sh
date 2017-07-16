@@ -42,13 +42,16 @@ TEMPORARY=$(mktemp -d)
 # Create Rockerfile to build with rocker (the Dockerfile enhancer tool)
 cat > ${TEMPORARY}/Rockerfile <<EOF
 FROM node
-
 MOUNT {{ .Build }}:/app
 MOUNT {{ .Cache }}:/app/node_modules
+
 RUN cd /app && npm i && yarn run build
+EXPORT /app/build
 
 FROM nginx:alpine
-ADD ./build /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx
+IMPORT build /usr/share/nginx
+RUN mv /usr/share/nginx/build /usr/share/nginx/html
 
 TAG registry.clickyab.ae/clickyab/{{ .App }}:{{ .Version }}
 PUSH registry.clickyab.ae/clickyab/{{ .App }}:{{ .Version }}
