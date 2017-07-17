@@ -247,7 +247,7 @@ module.exports = {
             {
                 loader: require.resolve('less-loader'),
                 options: {
-                    // modifyVars: { "@primary-color": "#a51900" },
+                    modifyVars: {'@icon-url': '"//static.clickyab.com/font/ant-font"'},
                 },
             },
         ],
