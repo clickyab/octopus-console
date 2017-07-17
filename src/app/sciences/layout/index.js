@@ -9,6 +9,7 @@ import {Layout, Breadcrumb, Icon} from 'antd';
 import Supplier from "../supplier/index";
 import Demand from "../demand/index";
 import Exchange from "../exchange/index";
+import './styles/index.less';
 
 const {Content, Footer, Sider} = Layout;
 
