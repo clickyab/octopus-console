@@ -1,6 +1,6 @@
 import {SIDEBAR_STATE, LOGIN_FAILED} from "../actions/index";
 
-export function sidebarStateReducer(state = "dashboard", action) {
+export function sidebarStateReducer(state = "", action) {
     switch (action.type) {
         case SIDEBAR_STATE:
             return action.data;

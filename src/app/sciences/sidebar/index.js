@@ -75,7 +75,8 @@ class Sidebar extends Component {
         return (
             <div>
                 <div className="logo"/>
-                <Menu theme="dark" mode={this.props.mode} defaultSelectedKeys={[this.props.sidebarState]}
+                <Menu theme="dark" mode={this.props.mode}
+                      defaultSelectedKeys={[this.props.sidebarState.length > 0 ? this.props.sidebarState : "dashboard"]}
                       onClick={this.handleClick}>
                     <Menu.Item key="dashboard">
                         <span>
