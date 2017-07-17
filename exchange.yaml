@@ -1,0 +1,476 @@
+swagger: "2.0"
+info:
+  version: 1.0.0
+  title: The Malooch API
+  description: Auto genertaed Malooch API
+host: exchange.3rdad.com
+basePath: /api
+schemes:
+- http
+consumes:
+- application/json
+produces:
+- application/json
+paths:
+  /report/demand/{from}/{to}:
+    get:
+      description: demand report in system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/routes_demandReportResponse'
+        "400":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+        "401":
+          description: you are not authorized
+          schema:
+            properties:
+              error:
+                properties:
+                  params:
+                    items:
+                      type: string
+                    type: array
+                  text:
+                    type: string
+                type: object
+            title: not_authorized
+            type: object
+        "403":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+      parameters:
+      - name: from
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: to
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: sort
+        type: string
+        description: ""
+        in: query
+        required: false
+      - name: c
+        type: integer
+        description: ' count per page'
+        in: query
+        required: false
+      - name: p
+        type: integer
+        description: ' page number'
+        in: query
+        required: false
+      - name: token
+        type: string
+        description: the security token, get it from login route
+        in: header
+        required: true
+      tags:
+      - routes
+  /report/exchange/{from}/{to}:
+    get:
+      description: exchange report in system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/routes_exchangeReportResponse'
+        "400":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+        "401":
+          description: you are not authorized
+          schema:
+            properties:
+              error:
+                properties:
+                  params:
+                    items:
+                      type: string
+                    type: array
+                  text:
+                    type: string
+                type: object
+            title: not_authorized
+            type: object
+        "403":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+      parameters:
+      - name: from
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: to
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: sort
+        type: string
+        description: ""
+        in: query
+        required: false
+      - name: c
+        type: integer
+        description: ' count per page'
+        in: query
+        required: false
+      - name: p
+        type: integer
+        description: ' page number'
+        in: query
+        required: false
+      - name: token
+        type: string
+        description: the security token, get it from login route
+        in: header
+        required: true
+      tags:
+      - routes
+  /report/supplier/{from}/{to}:
+    get:
+      description: supplier report in system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/routes_demandReportResponse'
+        "400":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+        "401":
+          description: you are not authorized
+          schema:
+            properties:
+              error:
+                properties:
+                  params:
+                    items:
+                      type: string
+                    type: array
+                  text:
+                    type: string
+                type: object
+            title: not_authorized
+            type: object
+        "403":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+      parameters:
+      - name: from
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: to
+        type: string
+        description: ""
+        in: path
+        required: true
+      - name: c
+        type: integer
+        description: ' count per page'
+        in: query
+        required: false
+      - name: p
+        type: integer
+        description: ' page number'
+        in: query
+        required: false
+      - name: sort
+        type: string
+        description: ""
+        in: query
+        required: false
+      - name: token
+        type: string
+        description: the security token, get it from login route
+        in: header
+        required: true
+      tags:
+      - routes
+  /user/login:
+    post:
+      description: login user in system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/routes_responseLoginOK'
+        "400":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+        "403":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+      parameters:
+      - name: payload_data
+        schema:
+          $ref: '#/definitions/routes_loginPayload'
+        description: ""
+        in: body
+        required: false
+      tags:
+      - routes
+  /user/logout:
+    get:
+      description: logout is for the logout from the system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_NormalResponse'
+        "401":
+          description: you are not authorized
+          schema:
+            properties:
+              error:
+                properties:
+                  params:
+                    items:
+                      type: string
+                    type: array
+                  text:
+                    type: string
+                type: object
+            title: not_authorized
+            type: object
+        "403":
+          description: forbidden, you have no access here
+          schema:
+            properties:
+              error:
+                properties:
+                  params:
+                    items:
+                      type: string
+                    type: array
+                  text:
+                    type: string
+                type: object
+            title: forbidden
+            type: object
+      parameters:
+      - name: token
+        type: string
+        description: the security token, get it from login route
+        in: header
+        required: true
+      tags:
+      - routes
+  /user/register:
+    post:
+      description: login user in system
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/routes_responseLoginOK'
+        "400":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+        "403":
+          description: ""
+          schema:
+            $ref: '#/definitions/controller_ErrorResponseSimple'
+      parameters:
+      - name: payload_data
+        schema:
+          $ref: '#/definitions/routes_registrationPayload'
+        description: ""
+        in: body
+        required: false
+      tags:
+      - routes
+definitions:
+  controller_ErrorResponseSimple:
+    properties:
+      error:
+        properties:
+          params:
+            items:
+              type: string
+            type: array
+          text:
+            type: string
+        type: object
+    type: object
+  controller_NormalResponse:
+    properties: {}
+    type: object
+  models_DemandReport:
+    properties:
+      ad_in_count:
+        type: integer
+      ad_out_bid:
+        type: integer
+      ad_out_count:
+        type: integer
+      deliver_bid:
+        type: integer
+      deliver_count:
+        type: integer
+      deliver_rate:
+        type: integer
+      demand:
+        type: string
+      id:
+        type: integer
+      imp_out_count:
+        type: integer
+      profit:
+        type: integer
+      request_out_count:
+        type: integer
+      success_rate:
+        type: integer
+      target_date:
+        format: dateTime
+        type: string
+      win_rate:
+        type: integer
+    type: object
+  models_ExchangeReport:
+    properties:
+      demand_impression_in:
+        type: integer
+      demand_impression_out:
+        type: integer
+      earn:
+        type: integer
+      id:
+        type: integer
+      income:
+        type: integer
+      spent:
+        type: integer
+      supplier_impression_in:
+        type: integer
+      supplier_impression_out:
+        type: integer
+      target_date:
+        format: dateTime
+        type: string
+    type: object
+  routes_demandReportResponse:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          properties:
+            ad_in_count:
+              type: integer
+            ad_out_bid:
+              type: integer
+            ad_out_count:
+              type: integer
+            deliver_bid:
+              type: integer
+            deliver_count:
+              type: integer
+            deliver_rate:
+              type: integer
+            demand:
+              type: string
+            id:
+              type: integer
+            imp_out_count:
+              type: integer
+            profit:
+              type: integer
+            request_out_count:
+              type: integer
+            success_rate:
+              type: integer
+            target_date:
+              format: dateTime
+              type: string
+            win_rate:
+              type: integer
+          type: object
+        type: array
+    type: object
+  routes_exchangeReportResponse:
+    properties:
+      count:
+        type: integer
+      data:
+        items:
+          properties:
+            demand_impression_in:
+              type: integer
+            demand_impression_out:
+              type: integer
+            earn:
+              type: integer
+            id:
+              type: integer
+            income:
+              type: integer
+            spent:
+              type: integer
+            supplier_impression_in:
+              type: integer
+            supplier_impression_out:
+              type: integer
+            target_date:
+              format: dateTime
+              type: string
+          type: object
+        type: array
+    type: object
+  routes_loginPayload:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
+  routes_registrationPayload:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+      user_type:
+        type: string
+    type: object
+  routes_responseLoginOK:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      token:
+        type: string
+      user_type:
+        type: string
+    type: object
+  trans_t9Base:
+    properties:
+      params:
+        items:
+          type: string
+        type: array
+      text:
+        type: string
+    type: object

@@ -33,7 +33,7 @@
      * @type {String}
      * @default http://exchange.3rdad.com/api
      */
-    this.basePath = 'http://exchange.3rdad.com/api'.replace(/\/+$/, '');
+    this.basePath = '/api'.replace(/\/+$/, '');
 
     /**
      * The authentication methods to be included for all API calls.
