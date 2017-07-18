@@ -10,6 +10,10 @@ import {http500Error} from "../../services/http500ErrorNotif";
 
 @connect(({sidebarState, userData}) => ({sidebarState, userData}))
 class Sidebar extends Component {
+    state = {
+      sidebar: this.props.sidebarState.length > 0 ? this.props.sidebarState : 'dashboard'
+    };
+
     handleClick = e => {
         switch (e.key) {
             case 'dashboard':
@@ -68,15 +72,21 @@ class Sidebar extends Component {
                 message.error(error.body.error.text);
             }
         }
-
     };
+
+    componentWillReceiveProps(nextProp) {
+        if (nextProp.sidebarState.length > 0 && nextProp.sidebarState !== this.state.sidebar) {
+            this.setState({sidebar: nextProp.sidebarState})
+        }
+    }
 
     render() {
         return (
             <div>
                 <div className="logo"/>
                 <Menu theme="dark" mode={this.props.mode}
-                      defaultSelectedKeys={[this.props.sidebarState.length > 0 ? this.props.sidebarState : "dashboard"]}
+                      defaultSelectedKeys={[this.state.sidebar]}
+                      selectedKeys={[this.state.sidebar]}
                       onClick={this.handleClick}>
                     <Menu.Item key="dashboard">
                         <span>

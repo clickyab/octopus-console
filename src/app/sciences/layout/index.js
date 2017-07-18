@@ -10,7 +10,9 @@ import Supplier from "../supplier/index";
 import Demand from "../demand/index";
 import Exchange from "../exchange/index";
 import DocumentTitle from 'react-document-title';
+import {dispatch} from '../../services/dispatch';
 import './styles/index.less';
+import {getSidebarState} from "../../redux/actions/index";
 
 const {Content, Footer, Sider} = Layout;
 
@@ -24,7 +26,6 @@ export default class ExLayout extends Component {
     };
 
     onCollapse = (collapsed) => {
-        console.log(collapsed);
         this.setState({
             collapsed,
             mode: collapsed ? 'vertical' : 'inline',
@@ -45,6 +46,10 @@ export default class ExLayout extends Component {
         }
     }
 
+    homeClick = () => {
+        dispatch(getSidebarState('dashboard'));
+    };
+
     render() {
         return (
             <DocumentTitle title={`Exchange | ${this.props.location.pathname.replace("/", "")} `}>
@@ -59,7 +64,7 @@ export default class ExLayout extends Component {
                     <Layout>
                         <Content style={{margin: '0 16px', position: 'relative'}}>
                             {this.state.isLogin && <Breadcrumb style={{margin: '12px 0'}}>
-                                <Breadcrumb.Item><Link to="/dashboard"><Icon type="home"/></Link></Breadcrumb.Item>
+                                <Breadcrumb.Item><Link onClick={this.homeClick} to="/dashboard"><Icon type="home"/></Link></Breadcrumb.Item>
                                 <Breadcrumb.Item>
                                     {this.props.location.pathname !== '/dashboard' ? this.props.location.pathname.replace("/", "") : ''}
                                 </Breadcrumb.Item>
